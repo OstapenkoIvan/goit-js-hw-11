@@ -1,0 +1,38 @@
+.container {
+  height: 50px;
+  background-color: blueviolet;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-form {
+  width: 300px;
+  position: relative;
+}
+
+.search-input {
+  padding: 6px 10px;
+  width: 100%;
+
+  font-size: 18p;
+  line-height: 24px;
+
+  border: none;
+  border-radius: 5px;
+}
+
+.search-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+
+  border: none;
+  border-radius: 5px;
+}
