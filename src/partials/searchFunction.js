@@ -7,7 +7,7 @@ export default class SearchObj {
   constructor() {
     this.searchValue = '';
     this.page = 1;
-    this.perPage = 4;
+    this.perPage = 20;
     this.totalHits = 0;
   }
 
