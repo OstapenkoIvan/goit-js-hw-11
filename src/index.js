@@ -40,6 +40,7 @@ async function startPictureSearch() {
     const response = await searchObj.startSearch();
     const hits = await checkQty(response);
     const data = await appendHitsMarkup(hits);
+    const update = await showTotalFind();
     const show = await loadMoreBtn.show();
     const enable = await loadMoreBtn.enabled();
     const refresh = lightbox.refresh();
@@ -71,6 +72,7 @@ function checkQty({ total, hits }) {
 }
 
 function appendHitsMarkup(hits) {
+  console.log(hits);
   const hitsMarkup = hits
     .map(
       ({
@@ -109,15 +111,9 @@ function appendHitsMarkup(hits) {
     .join('');
 
   refs.galleryEl.insertAdjacentHTML('beforeEnd', hitsMarkup);
-
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
+  if (searchObj.page > 1) {
+    softScroll();
+  }
 }
 
 function clearGalleryMarkup() {
@@ -143,4 +139,15 @@ function showTotalFind() {
   if (searchObj.page === 1) {
     Notiflix.Notify.success(`Hooray! We found ${searchObj.totalHits} images.`);
   }
+}
+
+function softScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
