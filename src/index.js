@@ -32,6 +32,8 @@ function searchImages(evt) {
 
   clearGalleryMarkup();
   searchObj.setPage();
+  loadMoreBtn.hide();
+  loadMoreBtn.disabled();
   startPictureSearch();
 }
 
@@ -45,7 +47,7 @@ async function startPictureSearch() {
     const enable = await loadMoreBtn.enabled();
     const refresh = lightbox.refresh();
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
   }
 }
 // function startPictureSearch() {
@@ -67,12 +69,12 @@ function checkQty({ total, hits }) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+    throw new TypeError('No images found');
   }
   return hits;
 }
 
 function appendHitsMarkup(hits) {
-  console.log(hits);
   const hitsMarkup = hits
     .map(
       ({

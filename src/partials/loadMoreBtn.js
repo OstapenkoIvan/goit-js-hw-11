@@ -3,7 +3,7 @@ export default class LoadMoreBtn {
     this.loadBtn = document.querySelector(refClass);
   }
   hide() {
-    this.loadBtn.classList.add('.is-hidden');
+    this.loadBtn.classList.add('is-hidden');
   }
   show() {
     this.loadBtn.classList.remove('is-hidden');
