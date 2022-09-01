@@ -35,6 +35,7 @@ function searchImages(evt) {
   loadMoreBtn.hide();
   loadMoreBtn.disabled();
   startPictureSearch();
+  checkLastPage();
 }
 
 async function startPictureSearch() {
@@ -43,8 +44,9 @@ async function startPictureSearch() {
     const hits = await checkQty(response);
     const data = await appendHitsMarkup(hits);
     const update = await showTotalFind();
-    const show = await loadMoreBtn.show();
-    const enable = await loadMoreBtn.enabled();
+    const showFn = await checkLoadBtnShow();
+    // const show = await loadMoreBtn.show();
+    // const enable = await loadMoreBtn.enabled();
     const refresh = lightbox.refresh();
   } catch (error) {
     console.error(error.message);
@@ -131,6 +133,8 @@ function loadMoreImages() {
 
 function checkLastPage() {
   if (searchObj.page === Math.ceil(searchObj.totalHits / searchObj.perPage)) {
+    loadMoreBtn.hide();
+    loadMoreBtn.disabled();
     return Notiflix.Notify.warning(
       "We're sorry, but you've reached the end of search results."
     );
@@ -152,4 +156,14 @@ function softScroll() {
     top: cardHeight * 2,
     behavior: 'smooth',
   });
+}
+
+function checkLoadBtnShow() {
+  if (
+    !(searchObj.page === Math.ceil(searchObj.totalHits / searchObj.perPage))
+  ) {
+    loadMoreBtn.show();
+    loadMoreBtn.enabled();
+  }
+  return;
 }
